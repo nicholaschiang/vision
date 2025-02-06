@@ -33,7 +33,7 @@
 				href={`https://instagram.com/p/${post.code}`}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="aspect-[4/5]"
+				class="aspect-4/5"
 			>
 				<img
 					src={`/media?url=${encodeURIComponent(post.image_versions2.candidates[0].url)}`}
