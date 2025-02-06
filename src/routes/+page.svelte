@@ -24,7 +24,9 @@
 	});
 </script>
 
-<div class="fixed inset-x-0 bottom-0 border-t border-gray-400 shadow-2xl dark:border-gray-600 bg-gray-100 dark:bg-gray-900 z-10 flex overflow-x-auto overflow-y-hidden gap-2 p-2">
+<div
+	class="fixed inset-x-0 bottom-0 z-10 flex gap-2 overflow-x-auto overflow-y-hidden border-t border-gray-400 bg-gray-100 p-2 shadow-2xl dark:border-gray-600 dark:bg-gray-900"
+>
 	<Button
 		data-active
 		class="flex aspect-square items-center justify-center p-0"

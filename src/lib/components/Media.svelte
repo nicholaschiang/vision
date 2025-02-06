@@ -15,7 +15,11 @@
 		poster={image ? `/media?url=${encodeURIComponent(image)}` : undefined}
 		class="h-full w-full object-cover"
 		preload="none"
-		controls
+		loop
+		onmouseover={(event) => event.currentTarget.play()}
+		onfocus={(event) => event.currentTarget.play()}
+		onmouseout={(event) => event.currentTarget.pause()}
+		onblur={(event) => event.currentTarget.pause()}
 	>
 		<track kind="captions" />
 	</video>
