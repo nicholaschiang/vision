@@ -185,7 +185,7 @@ def main(
 
     collection = collections[0]
     logger.info("Getting media from collection: %s", collection["collection_name"])
-    media = get_collection_medias(cl, collection_pk=collection["collection_id"], amount=100)
+    media = get_collection_medias(cl, collection_pk=collection["collection_id"], amount=1000)
     with open(media_file, "w") as f:
         json.dump(media, f)
 

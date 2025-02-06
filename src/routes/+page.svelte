@@ -3,6 +3,7 @@
 	import collections from '../collections.json';
 
 	import Button from '$lib/components/Button.svelte';
+	import Media from '$lib/components/Media.svelte';
 
 	import { Plus, Minus } from 'lucide-svelte';
 
@@ -12,8 +13,8 @@
 		posts.filter(
 			(post) =>
 				selectedCollectionIds.includes('ALL_MEDIA_AUTO_COLLECTION') ||
-				post.saved_collection_ids.some((collectionId) =>
-					selectedCollectionIds.includes(collectionId)
+				selectedCollectionIds.every((collectionId) =>
+					(post.saved_collection_ids as string[]).includes(collectionId)
 				)
 		)
 	);
@@ -58,19 +59,31 @@
 </div>
 
 <div class="grid gap-2 p-2" style:grid-template-columns={`repeat(${gridCols}, minmax(0, 1fr))`}>
-	{#each filteredPosts as post}
-		<a
-			aria-label={post.caption?.text}
-			href={`https://instagram.com/p/${post.code}`}
-			target="_blank"
-			rel="noopener noreferrer"
-			class="aspect-4/5"
-		>
-			<img
-				src={`/media?url=${encodeURIComponent(post.image_versions2.candidates[0].url)}`}
-				alt={post.caption?.text}
-				class="h-full w-full object-cover"
-			/>
-		</a>
+	{#each filteredPosts as post (post.id)}
+		{#if post.carousel_media}
+			<div class="flex aspect-4/5 snap-x snap-mandatory overflow-x-auto overflow-y-hidden">
+				{#each post.carousel_media as media, index (media.id)}
+					<a
+						aria-label={post.caption?.text}
+						href={`https://instagram.com/p/${post.code}?img_index=${index + 1}`}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="aspect-4/5 w-full snap-start"
+					>
+						<Media {media} />
+					</a>
+				{/each}
+			</div>
+		{:else}
+			<a
+				aria-label={post.caption?.text}
+				href={`https://instagram.com/p/${post.code}`}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="aspect-4/5"
+			>
+				<Media media={post} />
+			</a>
+		{/if}
 	{/each}
 </div>
