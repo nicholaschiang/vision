@@ -14,10 +14,8 @@
 		src={`/media?url=${encodeURIComponent(video)}`}
 		poster={image ? `/media?url=${encodeURIComponent(image)}` : undefined}
 		class="h-full w-full object-cover"
+		preload="none"
 		controls
-		autoplay
-		muted
-		loop
 	>
 		<track kind="captions" />
 	</video>
@@ -33,6 +31,6 @@
 	<div
 		class="flex h-full w-full items-center justify-center border border-dashed border-gray-300 p-2 dark:border-gray-700"
 	>
-		<p class="text-sm text-gray-300 dark:text-gray-700">No media found</p>
+		<p class="text-xs text-gray-300 dark:text-gray-700">No media found</p>
 	</div>
 {/if}

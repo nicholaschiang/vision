@@ -24,81 +24,77 @@
 	});
 </script>
 
-<div class="flex h-screen flex-col overflow-hidden">
-	<div class="flex flex-none flex-wrap gap-2 p-2">
-		{#each collections as collection (collection.collection_id)}
-			<Button
-				data-active={selectedCollectionIds.includes(collection.collection_id) ? '' : undefined}
-				onclick={() => {
-					if (selectedCollectionIds.includes(collection.collection_id)) {
-						selectedCollectionIds = selectedCollectionIds.filter(
-							(id) => id !== collection.collection_id
-						);
-					} else {
-						selectedCollectionIds = [...selectedCollectionIds, collection.collection_id];
-					}
-				}}
-			>
-				{collection.collection_name}
-			</Button>
-		{/each}
-	</div>
-
-	<div class="flex flex-none gap-2 px-2 pt-1 pb-3">
+<div class="fixed inset-x-0 bottom-0 border-t border-gray-400 shadow-2xl dark:border-gray-600 bg-gray-100 dark:bg-gray-900 z-10 flex overflow-x-auto overflow-y-hidden gap-2 p-2">
+	<Button
+		data-active
+		class="flex aspect-square items-center justify-center p-0"
+		onclick={() => {
+			gridCols--;
+		}}
+	>
+		<Plus class="h-4 w-4" />
+	</Button>
+	<Button
+		data-active
+		class="flex aspect-square items-center justify-center p-0"
+		onclick={() => {
+			gridCols++;
+		}}
+	>
+		<Minus class="h-4 w-4" />
+	</Button>
+	{#each collections as collection (collection.collection_id)}
 		<Button
-			class="flex h-6 w-6 items-center justify-center rounded-full p-0"
+			class="whitespace-nowrap"
+			data-active={selectedCollectionIds.includes(collection.collection_id) ? '' : undefined}
 			onclick={() => {
-				gridCols--;
+				if (selectedCollectionIds.includes(collection.collection_id)) {
+					selectedCollectionIds = selectedCollectionIds.filter(
+						(id) => id !== collection.collection_id
+					);
+				} else {
+					selectedCollectionIds = [...selectedCollectionIds, collection.collection_id];
+				}
 			}}
 		>
-			<Plus class="h-4 w-4" />
+			{collection.collection_name}
 		</Button>
-		<Button
-			class="flex h-6 w-6 items-center justify-center rounded-full p-0"
-			onclick={() => {
-				gridCols++;
-			}}
-		>
-			<Minus class="h-4 w-4" />
-		</Button>
-	</div>
+	{/each}
+</div>
 
-	<div class="h-0 grow">
-		<VirtualList items={filteredPosts} height="100%">
-			{#snippet children(item)}
-				<div
-					class="grid gap-2 px-2 py-1"
-					style:grid-template-columns={`repeat(${gridCols}, minmax(0, 1fr))`}
-				>
-					{#each item as post (post.id)}
-						{#if post.carousel_media}
-							<div class="flex aspect-4/5 snap-x snap-mandatory overflow-x-auto overflow-y-hidden">
-								{#each post.carousel_media as media, index (media.id)}
-									<a
-										aria-label={post.caption?.text}
-										href={`https://instagram.com/p/${post.code}?img_index=${index + 1}`}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="aspect-4/5 w-full snap-start"
-									>
-										<Media {media} />
-									</a>
-								{/each}
-							</div>
-						{:else}
+<VirtualList items={filteredPosts} height="100vh">
+	{#snippet children(item)}
+		<div
+			class="-mb-2 grid gap-2 p-2"
+			style:grid-template-columns={`repeat(${gridCols}, minmax(0, 1fr))`}
+		>
+			{#each item as post (post.id)}
+				{#if post.carousel_media}
+					<div class="flex aspect-4/5 snap-x snap-mandatory overflow-x-auto overflow-y-hidden">
+						{#each post.carousel_media as media, index (media.id)}
 							<a
 								aria-label={post.caption?.text}
-								href={`https://instagram.com/p/${post.code}`}
+								href={`https://instagram.com/p/${post.code}?img_index=${index + 1}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="aspect-4/5"
+								class="aspect-4/5 min-w-full snap-start"
 							>
-								<Media media={post} />
+								<Media {media} />
 							</a>
-						{/if}
-					{/each}
-				</div>
-			{/snippet}
-		</VirtualList>
-	</div>
-</div>
+						{/each}
+					</div>
+				{:else}
+					<a
+						aria-label={post.caption?.text}
+						href={`https://instagram.com/p/${post.code}`}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="aspect-4/5"
+					>
+						<Media media={post} />
+					</a>
+				{/if}
+			{/each}
+		</div>
+	{/snippet}
+</VirtualList>
