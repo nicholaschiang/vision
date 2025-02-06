@@ -6,7 +6,7 @@
 	import Media from '$lib/components/Media.svelte';
 	import VirtualList from '$lib/components/VirtualList.svelte';
 
-	import { Plus, Minus } from 'lucide-svelte';
+	import { Plus, Minus, Fullscreen } from 'lucide-svelte';
 
 	let gridCols = $state(4);
 	let selectedCollectionIds = $state([collections[0].collection_id]);
@@ -27,6 +27,22 @@
 <div
 	class="fixed inset-x-0 bottom-0 z-10 flex gap-2 overflow-x-auto overflow-y-hidden border-t border-gray-400 bg-gray-100 p-2 shadow-2xl dark:border-gray-600 dark:bg-gray-900"
 >
+	<Button
+		data-active
+		class="flex aspect-square items-center justify-center p-0"
+		onclick={() => {
+		  if (document.fullscreenElement) {
+				document
+					.exitFullscreen()
+					.then(() => console.log("Document Exited from Full screen mode"))
+					.catch((err) => console.error(err));
+			} else {
+				document.documentElement.requestFullscreen();
+			}
+		}}
+	>
+		<Fullscreen class="h-4 w-4" />
+	</Button>
 	<Button
 		data-active
 		class="flex aspect-square items-center justify-center p-0"
@@ -72,14 +88,14 @@
 		>
 			{#each item as post (post.id)}
 				{#if post.carousel_media}
-					<div class="flex aspect-4/5 snap-x snap-mandatory overflow-x-auto overflow-y-hidden">
+					<div class="flex aspect-9/16 snap-x snap-mandatory overflow-x-auto overflow-y-hidden">
 						{#each post.carousel_media as media, index (media.id)}
 							<a
 								aria-label={post.caption?.text}
 								href={`https://instagram.com/p/${post.code}?img_index=${index + 1}`}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="aspect-4/5 min-w-full snap-start"
+								class="aspect-9/16 min-w-full snap-start"
 							>
 								<Media {media} />
 							</a>
@@ -91,7 +107,7 @@
 						href={`https://instagram.com/p/${post.code}`}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="aspect-4/5"
+						class="aspect-9/16"
 					>
 						<Media media={post} />
 					</a>
