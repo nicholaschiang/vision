@@ -15,7 +15,9 @@
 		poster={image ? `/media?url=${encodeURIComponent(image)}` : undefined}
 		class="h-full w-full object-cover"
 		controls
-		preload="none"
+		autoplay
+		muted
+		loop
 	>
 		<track kind="captions" />
 	</video>
