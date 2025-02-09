@@ -24,8 +24,8 @@
   })
 </script>
 
-<div class="flex w-0 grow flex-col gap-2">
-  <div class="flex flex-none gap-2 overflow-x-auto">
+<div class="flex w-0 grow flex-col">
+  <div class="flex flex-none gap-2 overflow-x-auto py-2">
     <Button
       data-active
       class="flex aspect-square items-center justify-center p-0"
