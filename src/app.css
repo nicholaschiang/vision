@@ -1,5 +1,9 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
+/* Toggle dark mode with a button. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Use neutral colors for grays. */
 @theme {
   --color-gray-50: oklch(0.985 0 0);
   --color-gray-100: oklch(0.97 0 0);
