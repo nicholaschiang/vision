@@ -10,22 +10,19 @@
   <a
     {href}
     class={cn(
-      "px-0.5 py-1 text-gray-600 transition hover:text-inherit dark:text-gray-400",
-      page.url.pathname === href && "text-inherit underline dark:text-inherit",
+      "px-0.5 py-1 text-gray-400 transition hover:text-inherit dark:text-gray-600",
+      page.url.pathname.includes(href) &&
+        "text-inherit underline dark:text-inherit",
     )}>{label}</a
   >
 {/snippet}
 
-<div
-  class="h-screen overflow-hidden bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-gray-50"
->
-  <div class="mx-auto flex h-full max-w-screen-lg">
-    <nav class="flex w-40 flex-none flex-col py-2">
-      {@render link("/", "Inspiration")}
-      {@render link("/calendar", "Calendar")}
-      {@render link("/wishlist", "Wishlist")}
-      <DarkModeSwitch />
-    </nav>
-    {@render children()}
-  </div>
+<div class="mx-auto flex items-start min-h-screen max-w-screen-lg">
+  <nav class="sticky top-0 flex w-40 flex-none flex-col items-start py-2">
+    {@render link("/posts", "Inspiration")}
+    {@render link("/calendar", "Calendar")}
+    {@render link("/wishlist", "Wishlist")}
+    <DarkModeSwitch />
+  </nav>
+  {@render children()}
 </div>

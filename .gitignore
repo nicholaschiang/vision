@@ -2,8 +2,7 @@ node_modules
 
 # Data
 /data
-/src/collections.json
-/src/posts.json
+/src/lib/data
 
 # Output
 .output

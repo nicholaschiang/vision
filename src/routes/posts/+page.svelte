@@ -1,6 +1,6 @@
 <script lang="ts">
-  import posts from "../posts.json"
-  import collections from "../collections.json"
+  import posts from "$lib/data/posts.json"
+  import collections from "$lib/data/collections.json"
 
   import Button from "$lib/components/Button.svelte"
   import Media from "$lib/components/Media.svelte"
@@ -8,6 +8,7 @@
 
   import { Plus, Minus, Fullscreen } from "lucide-svelte"
 
+  let { children } = $props()
   let gridCols = $state(3)
   let selectedCollectionIds = $state(["18031828522742161"])
   let filteredPosts = $derived.by(() => {
@@ -24,7 +25,7 @@
   })
 </script>
 
-<div class="flex w-0 grow flex-col">
+<div class="flex w-0 grow flex-col h-screen">
   <div class="flex flex-none gap-2 overflow-x-auto py-2">
     <Button
       data-active
@@ -92,28 +93,20 @@
         >
           {#each item as post (post.id)}
             {#if post.carousel_media}
-              <div
+              <a
                 class="flex aspect-9/16 snap-x snap-mandatory overflow-x-auto overflow-y-hidden rounded"
+                href={`/posts/${post.id}`}
               >
                 {#each post.carousel_media as media, index (media.id)}
-                  <a
-                    aria-label={post.caption?.text}
-                    href={`https://instagram.com/p/${post.code}?img_index=${index + 1}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="aspect-9/16 min-w-full snap-start"
-                  >
+                  <div class="aspect-9/16 min-w-full snap-start">
                     <Media {media} />
-                  </a>
+                  </div>
                 {/each}
-              </div>
+              </a>
             {:else}
               <a
-                aria-label={post.caption?.text}
-                href={`https://instagram.com/p/${post.code}`}
-                target="_blank"
-                rel="noopener noreferrer"
                 class="aspect-9/16 overflow-hidden rounded"
+                href={`/posts/${post.id}`}
               >
                 <Media media={post} />
               </a>

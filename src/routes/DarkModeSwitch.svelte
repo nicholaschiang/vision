@@ -1,7 +1,7 @@
 <script lang="ts">
   import { browser } from "$app/environment"
 
-  let darkMode = true
+  let darkMode = $state(true)
 
   function handleSwitchDarkMode() {
     darkMode = !darkMode
@@ -29,6 +29,6 @@
 </script>
 
 <button
-  class="px-0.5 py-1 text-left text-gray-600 hover:text-inherit dark:text-gray-400"
+  class="px-0.5 py-1 text-left text-gray-400 hover:text-inherit dark:text-gray-600 transition"
   onclick={handleSwitchDarkMode}>Theme</button
 >
